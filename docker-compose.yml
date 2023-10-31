@@ -1,0 +1,25 @@
+version: '3'
+services:
+  app:
+    build:
+      context: . # Use the "godock" directory as the build context
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./mybankapi:/app  # Mount the local directory into the container
+  
+    depends_on:
+      - database
+
+
+  database:
+    build:
+      context: postgresdocker  # Use the "postdock" directory as the build context
+    environment:
+      POSTGRES_DB: bankapidb  # Specify the database name
+      POSTGRES_USER: pedro    # Specify the username
+      POSTGRES_PASSWORD: 1234567  # Specify the password
+    volumes:
+      - ./db:/docker-entrypoint-initdb.d
+    ports: 
+      - "5432:5432"

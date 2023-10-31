@@ -1,0 +1,3 @@
+FROM postgres:latest
+COPY ./db/mybankapidb.sql/ /docker-entrypoint-initdb.d
+
