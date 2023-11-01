@@ -43,7 +43,7 @@ para executar a transferencia
 
 para listar as transações de uma determinada conta(da conta 1 por exemplo):
 
-    localhost:8080/transacoes
+    localhost:8080/transacoes/1
  
 
 para consultar saldo de uma  conta(da conta 1 por exemplo):
