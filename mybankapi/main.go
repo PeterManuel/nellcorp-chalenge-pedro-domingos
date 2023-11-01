@@ -11,11 +11,11 @@ import (
 
 func main() {
 
-	// Create a new router.
+	// inicializar a rota
 	r := mux.NewRouter()
 
-	// Define a route to get all accounts.
-	r.HandleFunc("/accounts", handlers.GetAccounts).Methods("GET")
+	// Defindo as rotas
+	r.HandleFunc("/contas", handlers.GetAccounts).Methods("GET")
 
 	r.HandleFunc("/depositar", handlers.Depositar).Methods("POST")
 	r.HandleFunc("/levantar", handlers.Levantar).Methods("POST")
@@ -27,6 +27,6 @@ func main() {
 	r.HandleFunc("/transacao", handlers.ListarTransacao).Methods("GET")
 	r.HandleFunc("/depositos", handlers.ListarDepositos).Methods("GET")
 
-	// Start the server.
+	// iniciar o servidor
 	log.Fatal(http.ListenAndServe(":8080", r))
 }

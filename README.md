@@ -3,26 +3,14 @@ Para Executar:
     docker-compose up
 
 
-para efectuar o deposito
+para efectuar o deposito:
+    curl -X POST -H "Content-Type: application/json" -d '{"idconta": 1, "montante": 30}' localhost:8080/depositar
 
-    POST
-    
-    localhost:8080/depositar
-    {
-        "idconta":1,
-        "montante":30
-    }
 
 
 para efectuar o levantamento
 
-    POST
-    
-    localhost:8080/levantamento
-    {
-        "idconta":1,
-        "montante":10
-    }
+    curl -X POST -H "Content-Type: application/json" -d '{"idconta": 1, "montante": 10}' localhost:8080/levantamento
 
 
 
@@ -30,22 +18,17 @@ para efectuar o levantamento
 para testar pode se usar postman,insomia ou mesmo curl
 
 para executar a transferencia
+    curl -X POST -H "Content-Type: application/json" -d '{"idcontaemissora": 1, "idcontareceptora": 2, "montante": 10}' localhost:8080/transferir
 
-    POST
-
-    localhost:8080/transferir
-    
-    {
-	"idcontaemissora":1,
-	"idcontareceptpra":2,
-	"montante":10
-    }
 
 para listar as transações de uma determinada conta(da conta 1 por exemplo):
-GET
-    localhost:8080/transacoes/1
+    curl -X GET localhost:8080/transacoes/1
+
  
 
 para consultar saldo de uma  conta(da conta 1 por exemplo):
-GET
-    localhost:8080/consutar/1
+    curl -X GET localhost:8080/consultar/1
+
+
+para listar todas as contas:
+    curl -X GET localhost:8080/contas
