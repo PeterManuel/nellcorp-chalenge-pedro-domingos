@@ -42,10 +42,10 @@ para executar a transferencia
     }
 
 para listar as transações de uma determinada conta(da conta 1 por exemplo):
-
+GET
     localhost:8080/transacoes/1
  
 
 para consultar saldo de uma  conta(da conta 1 por exemplo):
-
+GET
     localhost:8080/consutar/1
