@@ -41,7 +41,7 @@ para executar a transferencia
 	"montante":10
     }
 
-para listar as transações de uma determinada conta:
+para listar as transações de uma determinada conta(da conta 1 por exemplo):
 
     localhost:8080/transacoes
  
