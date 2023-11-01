@@ -21,8 +21,8 @@ func main() {
 	r.HandleFunc("/levantar", handlers.Levantar).Methods("POST")
 	r.HandleFunc("/transferir", handlers.Transferir).Methods("POST")
 	r.HandleFunc("/reembolsar", handlers.Levantar).Methods("POST")
-	r.HandleFunc("/saldo/{idConta}", handlers.Levantar).Methods("GET")
-	r.HandleFunc("/listar_transacoes/{idConta}", handlers.Levantar).Methods("GET")
+	r.HandleFunc("/saldo/{idConta}", handlers.Consultar).Methods("GET")
+	r.HandleFunc("/transacoes/{idConta}", handlers.ListarTransacaoPorConta).Methods("GET")
 
 	r.HandleFunc("/transacao", handlers.ListarTransacao).Methods("GET")
 	r.HandleFunc("/depositos", handlers.ListarDepositos).Methods("GET")

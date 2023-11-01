@@ -13,6 +13,12 @@ type Transacao struct {
 	Estado string `json:"estado"`
 }
 
+type TransactionList struct {
+	Transferencias []Transferencia
+	Levantamentos  []Levantamento
+	Depositos      []Deposito
+}
+
 func CreateTransacao(db *sql.DB, tipo string) (error, int) {
 	query := `INSERT INTO transacao (tipo)
               VALUES ($1) RETURNING id`

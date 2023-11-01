@@ -21,13 +21,15 @@ func Transferir(w http.ResponseWriter, r *http.Request) {
 	}
 
 	erros, id := models.CreateTransacao(db, "transferencia")
+
 	if erros == nil {
+		models.UpdateConta(db, transferencia.IdContaEmissora, -transferencia.Montante)
 		e1 := models.InserirLevantamento(db, id, transferencia.IdContaEmissora, transferencia.Montante)
 		if e1 != nil {
 			http.Error(w, "Falha ao efectuar o Levantamento", http.StatusInternalServerError)
 			return
 		}
-
+		models.UpdateConta(db, transferencia.IdContaReceptora, transferencia.Montante)
 		e2 := models.InserirDeposito(db, id, transferencia.IdContaReceptora, transferencia.Montante)
 		if e2 != nil {
 			http.Error(w, "Falha ao efectuar o Deposito", http.StatusInternalServerError)
@@ -43,6 +45,9 @@ func Transferir(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Respond with the inserted data, including the ID.
+	var msg models.Mensagem
+	msg.Descricao = "Transferencia efectuada com sucesso"
+	msg.Estado = "Success"
 	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(transferencia)
+	json.NewEncoder(w).Encode(msg)
 }

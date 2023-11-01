@@ -47,8 +47,11 @@ func Depositar(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Respond with the inserted data, including the ID.
+	var msg models.Mensagem
+	msg.Descricao = "Desposito efectuado com sucesso"
+	msg.Estado = "Success"
 	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(deposito)
+	json.NewEncoder(w).Encode(msg)
 }
 
 func ListarDepositos(w http.ResponseWriter, r *http.Request) {

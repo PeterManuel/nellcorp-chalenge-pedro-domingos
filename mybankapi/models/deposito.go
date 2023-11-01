@@ -2,12 +2,15 @@ package models
 
 import (
 	"database/sql"
+	"log"
 
 	_ "github.com/lib/pq"
 )
 
 type Deposito struct {
 	ID          int     `json:"id"`
+	Tipo        string  `json:"tipo"`
+	Estado      string  `json:"estado"`
 	IdConta     int     `json:"idconta"`
 	IdTransacao int     `json:"idtransacao"`
 	Montante    float32 `json:"montante"`
@@ -23,31 +26,32 @@ func InserirDeposito(db *sql.DB, idtransacao int, idConta int, montante float32)
 
 // InsertDeposito inserts data into the deposito table.
 
-/*
-func GettransacaoByID(db *sql.DB, id int) (Transacao, error) {
-	query := "SELECT * FROM transacao WHERE id = $1"
+func DepositoPorConta(db *sql.DB, idconta int) ([]Deposito, error) {
+	query := `
+	SELECT d.id, d.idconta, d.idtransacao, d.montante, t.tipo, t.estado
+	FROM deposito d
+	JOIN transacao t ON d.idtransacao = t.id
+	WHERE d.idconta = $1
+	`
 
-	var transacao Transacao
-	err := db.QueryRow(query, id).Scan(&transacao.ID, &transacao.Tipo, &transacao.Tempo)
+	rows, err := db.Query(query, idconta)
 	if err != nil {
-		return transacao, err
+		log.Fatal(err)
 	}
-	return transacao, nil
+	defer rows.Close()
+
+	depositos := []Deposito{}
+
+	// Iterate through the rows and populate the deposits slice
+	for rows.Next() {
+		var deposito Deposito
+
+		err := rows.Scan(&deposito.ID, &deposito.IdConta, &deposito.IdTransacao, &deposito.Montante, &deposito.Tipo, &deposito.Estado)
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		depositos = append(depositos, deposito)
+	}
+	return depositos, nil
 }
-
-func Updatetransacao(db *sql.DB, transacao Transacao) error {
-	query := `UPDATE transacao
-              SET type=$2, amount=$3, sender_account=$4, receiver_account1=$5, receiver_account2=$6, tempo=$7
-              WHERE id=$1`
-
-	_, err := db.Exec(query, transacao.ID, transacao.Tipo, transacao.Montante)
-	return err
-}
-
-func Deletetransacao(db *sql.DB, id int) error {
-	query := "DELETE FROM transacao WHERE id = $1"
-
-	_, err := db.Exec(query, id)
-	return err
-}
-*/

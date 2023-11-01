@@ -38,8 +38,11 @@ func Levantar(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Respond with the inserted data, including the ID.
+	var msg models.Mensagem
+	msg.Descricao = "Levantamento efectuado com sucesso"
+	msg.Estado = "Success"
 	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(levantamento)
+	json.NewEncoder(w).Encode(msg)
 }
 
 func ListarLevantamentos(w http.ResponseWriter, r *http.Request) {
