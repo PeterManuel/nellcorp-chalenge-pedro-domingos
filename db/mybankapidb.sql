@@ -52,3 +52,46 @@ VALUES ('empregado');
 
 INSERT INTO conta (nome)
 VALUES ('cliente');
+
+
+INSERT INTO transacao (tipo)
+VALUES ('deposito');
+
+INSERT INTO transacao (tipo)
+VALUES ('transferencia'); 
+INSERT INTO transacao (tipo)
+VALUES ('levantamento'); 
+
+INSERT INTO transacao (tipo)
+VALUES ('deposito');
+
+INSERT INTO deposito (idconta, idtransacao, montante)
+VALUES (1, 1, 300.0); 
+
+UPDATE conta
+              SET  saldo=saldo+300.0
+              WHERE id=1;
+
+INSERT INTO Transferencia (idcontaemissora, idcontareceptora, idtransacao, montante)
+VALUES (1, 2, 2, 200.0); 
+UPDATE conta
+              SET  saldo=saldo+200.0
+              WHERE id=2;
+
+UPDATE conta
+              SET  saldo=saldo-200.0
+              WHERE id=1;
+
+INSERT INTO deposito (idconta, idtransacao, montante)
+VALUES (3, 4, 700.0); 
+
+UPDATE conta
+              SET  saldo=saldo+700.0
+              WHERE id=3;
+
+INSERT INTO levantamento (idconta, idtransacao, montante)
+VALUES (3, 3, 50.0); 
+
+UPDATE conta
+              SET  saldo=saldo-50.0
+              WHERE id=2;

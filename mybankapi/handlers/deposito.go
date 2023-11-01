@@ -16,7 +16,11 @@ func Depositar(w http.ResponseWriter, r *http.Request) {
 	// Parse the request body into a Deposito struct.
 	err := json.NewDecoder(r.Body).Decode(&deposito)
 	if err != nil {
-		http.Error(w, "Invalid request body", http.StatusBadRequest)
+		var msg models.Mensagem
+		msg.Descricao = "Má formatacão dos dados"
+		msg.Estado = "Error"
+		w.Header().Set("Content-Type", "application/json")
+		json.NewEncoder(w).Encode(msg)
 		return
 	}
 
@@ -60,14 +64,22 @@ func ListarDepositos(w http.ResponseWriter, r *http.Request) {
 
 	if err != nil {
 
-		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+		var msg models.Mensagem
+		msg.Descricao = "Falha ao conectar a base de dados"
+		msg.Estado = "Error"
+		w.Header().Set("Content-Type", "application/json")
+		json.NewEncoder(w).Encode(msg)
 		return
 	}
 
 	rows, err := db.Query("SELECT * FROM deposito")
 	if err != nil {
 
-		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+		var msg models.Mensagem
+		msg.Descricao = "Falha ao No servidor ao buscar dados"
+		msg.Estado = "Error"
+		w.Header().Set("Content-Type", "application/json")
+		json.NewEncoder(w).Encode(msg)
 		return
 	}
 	defer rows.Close()
@@ -78,7 +90,11 @@ func ListarDepositos(w http.ResponseWriter, r *http.Request) {
 		err := rows.Scan(&deposito.ID, &deposito.IdConta, &deposito.IdTransacao, &deposito.Montante)
 		if err != nil {
 
-			http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+			var msg models.Mensagem
+			msg.Descricao = "Falha ao No servidor ao buscar dados"
+			msg.Estado = "Error"
+			w.Header().Set("Content-Type", "application/json")
+			json.NewEncoder(w).Encode(msg)
 			return
 		}
 		depositos = append(depositos, deposito)
