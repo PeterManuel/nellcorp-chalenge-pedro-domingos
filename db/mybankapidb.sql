@@ -43,9 +43,12 @@ CREATE TABLE Transferencia (
 
 
 -- insert_data.sql
-INSERT INTO conta (nome)
-VALUES ('Pedro');
 
 INSERT INTO conta (nome)
-VALUES ('Juventina');
+VALUES ('restaurante');
 
+INSERT INTO conta (nome)
+VALUES ('empregado');
+
+INSERT INTO conta (nome)
+VALUES ('cliente');
