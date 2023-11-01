@@ -20,7 +20,7 @@ func main() {
 	r.HandleFunc("/depositar", handlers.Depositar).Methods("POST")
 	r.HandleFunc("/levantar", handlers.Levantar).Methods("POST")
 	r.HandleFunc("/transferir", handlers.Transferir).Methods("POST")
-	r.HandleFunc("/reembolsar", handlers.Levantar).Methods("POST")
+	r.HandleFunc("/reembolsar/{idTransacao}", handlers.Reembolsar).Methods("GET")
 	r.HandleFunc("/saldo/{idConta}", handlers.Consultar).Methods("GET")
 	r.HandleFunc("/transacoes/{idConta}", handlers.ListarTransacaoPorConta).Methods("GET")
 

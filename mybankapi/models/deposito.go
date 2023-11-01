@@ -55,3 +55,31 @@ func DepositoPorConta(db *sql.DB, idconta int) ([]Deposito, error) {
 	}
 	return depositos, nil
 }
+
+func DepositoPorTransacao(db *sql.DB, idtransacao int) (int, float32, error) {
+	query := `
+	SELECT d.idconta, d.montante
+	FROM deposito d
+	JOIN transacao t ON d.idtransacao = t.id
+	WHERE d.idtransacao = $1
+	`
+
+	rows, err := db.Query(query, idtransacao)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer rows.Close()
+
+	// Iterate through the rows and populate the deposits slice
+	for rows.Next() {
+		var deposito Deposito
+
+		err := rows.Scan(&deposito.IdConta, &deposito.Montante)
+		if err != nil {
+			log.Fatal(err)
+		}
+		return deposito.IdConta, deposito.Montante, nil
+		//depositos = append(depositos, deposito)
+	}
+	return -1, -1, nil
+}

@@ -39,12 +39,12 @@ func GettransacaoByID(db *sql.DB, id int) (Transacao, error) {
 	return transacao, nil
 }
 
-func Updatetransacao(db *sql.DB, transacao Transacao) error {
+func Updatetransacao(db *sql.DB, id int) error {
 	query := `UPDATE transacao
-              SET type=$2, amount=$3, sender_account=$4, receiver_account1=$5, receiver_account2=$6, tempo=$7
+              SET estado='cancelado'
               WHERE id=$1`
 
-	_, err := db.Exec(query, transacao.ID, transacao.Tipo)
+	_, err := db.Exec(query, id)
 	return err
 }
 
